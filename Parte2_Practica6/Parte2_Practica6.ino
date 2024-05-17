@@ -63,9 +63,9 @@ void setup() {
   LCD_SebasLem.backlight();
   LCD_SebasLem.clear();
   LCD_SebasLem.setCursor(0, 0);
-  LCD_SebasLem.print("1.Pulsa el boton");
+  LCD_SebasLem.print("-> Bienvenido <-");
   LCD_SebasLem.setCursor(0, 1);
-  LCD_SebasLem.print("2.Ingresa clave");
+  LCD_SebasLem.print("Puerta Cerrada");
   Serial.println("Ingresa la clave: ");
 }
 
@@ -125,7 +125,7 @@ void claveCorrecta() {
   digitalWrite(17, HIGH);
   LCD_SebasLem.clear();
   LCD_SebasLem.setCursor(1, 0);
-  LCD_SebasLem.print("Bienvenido");
+  LCD_SebasLem.print("Clave Correcta");
   LCD_SebasLem.setCursor(1, 1);
   LCD_SebasLem.print("Puerta Abierta");
   Serial.print("\n");
