@@ -64,7 +64,7 @@ void setup() {
   LCD_SebasLem.clear();
   LCD_SebasLem.setCursor(0, 0);
   LCD_SebasLem.print("-> Bienvenido <-");
-  LCD_SebasLem.setCursor(0, 1);
+  LCD_SebasLem.setCursor(1, 1);
   LCD_SebasLem.print("Puerta Cerrada");
   Serial.println("Ingresa la clave: ");
 }
@@ -171,7 +171,7 @@ void Reinicio() {
   LCD_SebasLem.clear();
   LCD_SebasLem.setCursor(0, 0);
   LCD_SebasLem.print("-> Bienvenido <-");
-  LCD_SebasLem.setCursor(0, 1);
+  LCD_SebasLem.setCursor(1, 1);
   LCD_SebasLem.print("Puerta Cerrada");
   Serial.print("\n");
   Serial.println("Ingresa la clave: ");
