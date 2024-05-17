@@ -81,7 +81,7 @@ void loop() {
     LCD_SebasLem.setCursor(1, 0);
     LCD_SebasLem.print("Clave:");
     LCD_SebasLem.setCursor(inicio + 1, 1);
-    LCD_SebasLem.print(teclaPrecionada);
+    LCD_SebasLem.print("*");
   }
   if (inicio == 8) {
     verificarClaveTeclado();
