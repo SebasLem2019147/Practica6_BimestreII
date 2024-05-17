@@ -22,7 +22,7 @@ LiquidCrystal_I2C LCD_SebasLem(direccion_lcd, 16, 2);
 
 Servo servo_SebasLem;
 
-int tono = 600;
+int tono = 1000;
 
 const int filas = 4;
 const int columnas = 4;
@@ -131,11 +131,11 @@ void claveCorrecta() {
   Serial.print("\n");
   Serial.println("Bienvenido");
   Serial.println("Puerta Abierta");
-  tone(12, tono, 500);
-  delay(550);
+  tone(12, tono, 1000);
+  delay(1050);
   noTone(12);
-  tone(12, tono, 500);
-  delay(550);
+  tone(12, tono, 1000);
+  delay(1050);
   noTone(12);
   servo_SebasLem.write(180);
   delay(2000);
@@ -153,8 +153,8 @@ void claveIncorrecta() {
   Serial.println("Clave Incorrecta");
   Serial.println("Puerta Cerrada");
   for (int i = 0; i < 5; i++) {
-    tone(12, tono, 500);
-    delay(550);
+    tone(12, tono, 1000);
+    delay(1050);
     noTone(12);
   }
   servo_SebasLem.write(0);
