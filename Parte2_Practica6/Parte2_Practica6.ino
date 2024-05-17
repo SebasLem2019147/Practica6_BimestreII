@@ -170,9 +170,9 @@ void Reinicio() {
   servo_SebasLem.write(0);
   LCD_SebasLem.clear();
   LCD_SebasLem.setCursor(0, 0);
-  LCD_SebasLem.print("1.Pulsa el boton");
+  LCD_SebasLem.print("-> Bienvenido <-");
   LCD_SebasLem.setCursor(0, 1);
-  LCD_SebasLem.print("2.Ingresa clave");
+  LCD_SebasLem.print("Puerta Cerrada");
   Serial.print("\n");
   Serial.println("Ingresa la clave: ");
 }
