@@ -6,7 +6,7 @@
    Codigo Tecnico: EB5AV 
    Curso: Taller de electronica digital y reparacion de computadoras I
    Dev: Sebastian Enrique Lemus Salvador
-   Fecha: 17 de mayo de 2024
+   Fecha: 21 de mayo de 2024
    
    link de la simulacion: https://www.tinkercad.com/things/gAwXHnpswjr-parte2-practica6?sharecode=Z4JYnhiXvXgO1golXvvE3CIunXRQ1x-rfu8iH2EcoII
 */
@@ -22,7 +22,7 @@ LiquidCrystal_I2C LCD_SebasLem(direccion_lcd, 16, 2);
 
 Servo servo_SebasLem;
 
-int tono = 1000;
+int tono = 600;
 
 const int filas = 4;
 const int columnas = 4;
@@ -40,15 +40,14 @@ Keypad teclado = Keypad(makeKeymap(keys), pinesFila, pinesColumna, filas, column
 
 char teclaPrecionada;
 
-//clave para el teclado matricial 4x4 
-char clave[9] = "ABCD1234";
+// Clave para el teclado matricial 4x4 
+char clave[9] = "ABCD1590";
 char ingresaClave[9];
 int inicio = 0;
 
-//clave para el monitor serial
-char claveSerial[9] = "ABCD1234";
-char ingresaClaveSerial[9];
-int inicioSerial = 0;
+// Clave para el monitor serial
+String claveSerial = "ABCD1590";
+String claveRecibida = "";
 
 void setup() {
   Serial.begin(9600);
@@ -66,6 +65,7 @@ void setup() {
   LCD_SebasLem.print("-> Bienvenido <-");
   LCD_SebasLem.setCursor(1, 1);
   LCD_SebasLem.print("Puerta Cerrada");
+  Serial.println("Bienvenido");
   Serial.println("Ingresa la clave: ");
 }
 
@@ -89,14 +89,12 @@ void loop() {
   
   while (Serial.available() > 0) {
     char c = Serial.read();
-    Serial.print(c);
-    if (c != '\n' && c != '\r' && inicioSerial < 8) {
-      ingresaClaveSerial[inicioSerial] = c;
-      inicioSerial++;
-      ingresaClaveSerial[inicioSerial] = '\0';
+    if (c != '\n' && c != '\r') {
+      claveRecibida += c;
+      Serial.print(c);
     }
   }
-  if (inicioSerial == 8) {
+  if (claveRecibida.length() == 8) {
     verificarClaveSerial();
   }
   
@@ -111,14 +109,16 @@ void verificarClaveTeclado() {
   } else {
     claveIncorrecta();
   }
+  Reinicio();
 }
 
 void verificarClaveSerial() {
-  if (strcmp(claveSerial, ingresaClaveSerial) == 0) {
+  if (claveRecibida == claveSerial) {
     claveCorrecta();
   } else {
     claveIncorrecta();
   }
+  Reinicio();
 }
 
 void claveCorrecta() {
@@ -131,15 +131,14 @@ void claveCorrecta() {
   Serial.print("\n");
   Serial.println("Bienvenido");
   Serial.println("Puerta Abierta");
-  tone(12, tono, 1000);
-  delay(1050);
+  tone(12, tono, 600);
+  delay(650);
   noTone(12);
-  tone(12, tono, 1000);
-  delay(1050);
+  tone(12, tono, 600);
+  delay(650);
   noTone(12);
   servo_SebasLem.write(180);
   delay(2000);
-  Reinicio();
 }
 
 void claveIncorrecta() {
@@ -153,18 +152,19 @@ void claveIncorrecta() {
   Serial.println("Clave Incorrecta");
   Serial.println("Puerta Cerrada");
   for (int i = 0; i < 5; i++) {
-    tone(12, tono, 1000);
-    delay(1050);
+    tone(12, tono, 600);
+    delay(650);
     noTone(12);
   }
   servo_SebasLem.write(0);
   delay(2000);
-  Reinicio();
 }
 
 void Reinicio() {
   delay(3000);
   inicio = 0;
+  claveRecibida = "";
+  memset(ingresaClave, 0, sizeof(ingresaClave));
   digitalWrite(17, LOW);
   digitalWrite(16, LOW);
   servo_SebasLem.write(0);
@@ -174,5 +174,6 @@ void Reinicio() {
   LCD_SebasLem.setCursor(1, 1);
   LCD_SebasLem.print("Puerta Cerrada");
   Serial.print("\n");
+  Serial.println("Bienvenido");
   Serial.println("Ingresa la clave: ");
 }
